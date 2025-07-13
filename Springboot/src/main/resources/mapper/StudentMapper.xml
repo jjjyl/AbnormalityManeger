@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.StudentMapper">
+    <resultMap id="Base_Stud_List" type="com.example.demo.entity.Student">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="password" column="password"/>
+        <result property="stuNumber" column="stu_number"/>
+        <result property="sex" column="sex"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="qqNumber" column="qq_number"/>
+        <result property="identityCard" column="identity_card"/>
+        <result property="photo" column="photo"/>
+        <result property="signature" column="signature"/>
+        <result property="introduction" column="introduction"/>
+        <result property="isActive" column="is_active"/>
+        <result property="lastUpdate" column="last_update"/>
+    </resultMap>
+
+    <sql id="student_colum">
+        id,username,nickname,password,stu_number,sex,phone,email,qq_number,identity_card,photo,signature,introduction,is_active,last_update
+    </sql>
+
+    <insert id="addStudent">
+        insert into student(username,nickname,password,stu_number,sex,phone,email,qq_number,identity_card,photo,signature,introduction,is_active)
+        values(#{username},#{nickname},#{password},#{stuNumber},#{sex},#{phone},#{email},#{qqNumber},#{identityCard},#{photo},#{signature},#{introduction},#{isActive})
+    </insert>
+
+    <select id="getAllStudent" resultMap="Base_Stud_List">
+        select <include refid="student_colum"/> from student where is_active=1
+    </select>
+
+    <select id="getStudentById" resultMap="Base_Stud_List">
+        select <include refid="student_colum"/> from student where is_active=1 and id=#{id}
+    </select>
+
+    <update id="deleteStudentById">
+        update student set is_active=0 where id=#{id}
+    </update>
+
+    <update id="updateStudent">
+        update student
+        set username=#{username},nickname=#{nickname},password=#{password},stu_number=#{stuNumber},sex=#{sex},phone=#{phone},email=#{email},
+                qq_number=#{qqNumber},identity_card=#{identityCard},photo=#{photo},signature=#{signature},introduction=#{introduction},is_active=#{isActive}
+        where id=#{id}
+    </update>
+</mapper>

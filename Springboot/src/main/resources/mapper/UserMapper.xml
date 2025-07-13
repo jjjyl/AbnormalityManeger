@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <resultMap id="Base_User_List" type="com.example.demo.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="level" column="level"/>
+        <result property="photo" column="photo"/>
+        <result property="introduction" column="introduction"/>
+        <result property="role" column="role"/>
+        <result property="isActive" column="is_active"/>
+        <result property="operator" column="operator"/>
+        <result property="lastUpdate" column="last_update"/>
+    </resultMap>
+
+    <sql id="Base_colum">
+        id,username,nickname,password,phone,email,level,photo,introduction,role,is_active,operator,last_update
+    </sql>
+
+    <select id="getAllUsers" resultMap="Base_User_List">
+        select <include refid="Base_colum"/> from user where is_active=1
+    </select>
+
+    <select id="getUserById" resultMap="Base_User_List">
+        select <include refid="Base_colum"/> from user where id=#{id} and is_active=1
+    </select>
+
+    <update id="deleteUserById">
+        update user set is_active=0 where id=#{id}
+    </update>
+
+    <insert id="addUser" >
+        insert into user(username,nickname,password,phone,email,level,photo,introduction,role,is_active,operator)
+        values(#{username},#{nickname},#{password},#{phone},#{email},#{level},#{photo},#{introduction},#{role},#{isActive},#{operator})
+    </insert>
+
+    <update id="updateUser">
+        update user
+        set username=#{username},nickname=#{nickname},password=#{password},phone=#{phone},email=#{email},level=#{level},photo=#{photo},introduction=#{introduction},role=#{role},is_active=#{isActive},operator=#{operator}
+        where id=#{id}
+    </update>
+</mapper>
